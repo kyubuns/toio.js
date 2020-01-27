@@ -129,6 +129,12 @@ export class Cube {
       : missingCharacteristicRejection()
   }
 
+  public moveToPosition(x: number, y: number, angle: number, moveType: number, maxSpeed: number, speedType: number): Promise<number> | void {
+    return this.motorCharacteristic !== null
+      ? this.motorCharacteristic.moveToPosition(x, y, angle, moveType, maxSpeed, speedType)
+      : missingCharacteristicRejection()
+  }
+
   /**
    * Stop cube movement
    */

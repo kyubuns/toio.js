@@ -37,4 +37,27 @@ export class MotorSpec {
       },
     }
   }
+
+  public moveToPosition(x: number, y: number, angle: number, moveType: number, maxSpeed: number, speedType: number): MoveType {
+    const buf = Buffer.alloc(13)
+    buf.writeUInt8(3, 0)
+    buf.writeUInt8(0, 1)
+    buf.writeUInt8(5, 2)
+    buf.writeUInt8(moveType, 3)
+    buf.writeUInt8(maxSpeed, 4)
+    buf.writeUInt8(speedType, 5)
+    buf.writeUInt8(0, 6)
+    buf.writeUInt16LE(x, 7)
+    buf.writeUInt16LE(y, 9)
+    buf.writeUInt16LE(angle, 11)
+
+    return {
+      buffer: buf,
+      data: {
+        left: 100,
+        right: 100,
+        durationMs: 0,
+      },
+    }
+  }
 }
