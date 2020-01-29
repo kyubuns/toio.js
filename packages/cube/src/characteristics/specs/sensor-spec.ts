@@ -10,7 +10,12 @@
  */
 export interface DataType {
   buffer: Uint8Array
-  data: { isSloped: boolean; isCollisionDetected: boolean }
+  data: {
+    isSloped: boolean
+    isCollisionDetected: boolean
+    isDoubleTapDetected: boolean
+    attitude: number
+  }
   dataType: 'sensor:detection'
 }
 
@@ -19,7 +24,7 @@ export interface DataType {
  */
 export class SensorSpec {
   public parse(buffer: Buffer): DataType {
-    if (buffer.byteLength < 3) {
+    if (buffer.byteLength < 5) {
       throw new Error('parse error')
     }
 
@@ -30,12 +35,16 @@ export class SensorSpec {
 
     const isSloped = buffer.readUInt8(1) === 0
     const isCollisionDetected = buffer.readUInt8(2) === 1
+    const isDoubleTapDetected = buffer.readUInt8(3) === 1
+    const attitude = buffer.readUInt8(4)
 
     return {
       buffer: buffer,
       data: {
         isSloped: isSloped,
         isCollisionDetected: isCollisionDetected,
+        isDoubleTapDetected: isDoubleTapDetected,
+        attitude: attitude,
       },
       dataType: 'sensor:detection',
     }
