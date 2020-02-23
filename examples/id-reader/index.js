@@ -12,14 +12,13 @@ async function main() {
   const cube = await new NearestScanner().start()
 
   // connect to the cube
-  cube.connect()
+  await cube.connect()
+
+  cube.setCollisionThreshold(1)
 
   // set listeners to show toio ID information
   cube
-    .on('id:position-id', data => console.log('[POS ID]', data))
-    .on('id:standard-id', data => console.log('[STD ID]', data))
-    .on('id:position-id-missed', () => console.log('[POS ID MISSED]'))
-    .on('id:standard-id-missed', () => console.log('[STD ID MISSED]'))
+    .on('sensor:collision', data => console.log('[Collision]', data))
 }
 
 main()
