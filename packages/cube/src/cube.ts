@@ -286,9 +286,9 @@ export class Cube {
   }
 
   public setCollisionThreshold(threshold: number): Promise<void> | void {
-    return this.configurationCharacteristic !== null
-      ? this.configurationCharacteristic.setCollisionThreshold(threshold)
-      : missingCharacteristicRejection()
+    if (this.configurationCharacteristic !== null) {
+      this.configurationCharacteristic.setCollisionThreshold(threshold)
+    }
   }
 
   private setCharacteristics(characteristics: Characteristic[]): void {
